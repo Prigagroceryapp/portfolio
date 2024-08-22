@@ -5,7 +5,13 @@ import { CiMenuFries } from "react-icons/ci";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const links = [
+// Define the type for the links array
+interface LinkItem {
+  name: string;
+  path: string;
+}
+
+const links: LinkItem[] = [
   {
     name: "Home",
     path: "/",
@@ -28,7 +34,7 @@ const links = [
   },
 ];
 
-const Mobilenav = () => {
+const Mobilenav: React.FC = () => {
   const pathname = usePathname();
 
   return (
@@ -36,20 +42,26 @@ const Mobilenav = () => {
       <SheetTrigger className="flex justify-center items-center">
         <CiMenuFries className="text-[32px] text-accent" />
       </SheetTrigger>
-      <SheetContent className="flex flex-col items-start p-6 bg-black">
-        <div className="mb-4 text-lg font-bold">Logo</div>
-        <nav className="flex flex-col gap-4">
-          {links.map((link) => (
-            <Link
-              key={link.path}
-              href={link.path}
-              className={`text-lg font-medium ${
-                pathname === link.path ? "text-accent" : "text-white"
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
+      <SheetContent className="flex flex-col ">
+        <div className="mt-28 mb-32 text-center text-2xl">
+          <Link href='/'>
+            <h1 className="text-4xl font-semibold ">
+              Tejash<span className="text-accent">.</span>
+            </h1>
+          </Link>
+        </div>
+        <nav className="flex flex-col justify-center items-center gap-8">
+          {links.map((link, index) => {
+            return (
+              <Link
+                href={link.path}
+                key={index}
+                className={` ${link.path === pathname && "text-accent border-b-2 border-accent" } text-l capitalize hover:text-accent transition-all`}
+                >
+                {link.name}
+              </Link>
+            );
+          })}
         </nav>
       </SheetContent>
     </Sheet>
